@@ -11,14 +11,14 @@ export default function Navbar() {
   return (
     <nav className="bg-slate-200 p-4 flex justify-between items-center">
       <Link href="/home" className="text-xl font-bold">
-        MyApp
+        MSUApp
       </Link>
       <div>
         {isAuthenticated ? (
         <UserDropdown />
         ) : (
-          <Link href="/signin" className="px-4 py-2 bg-green-600 rounded-md hover:bg-green-700">
-            Sign In
+          <Link href="/signin" className="px-4 py-2">
+            SignIn
           </Link>
         )}
       </div>

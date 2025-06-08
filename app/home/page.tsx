@@ -1,12 +1,11 @@
-import Link from 'next/link'
+"use client"
 import React from 'react'
 
 const HomePage = () => {
+ 
   return (
-    <div>
-      <div>HomePage</div>
-
-    <Link href="/dashboard/profile">profile</Link>
+    <div className='container mx-auto px-4 sm:px-6 lg:px-8'>
+      <div>Landing page</div>
 
     </div>
 

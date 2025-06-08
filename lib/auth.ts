@@ -1,11 +1,12 @@
 import { cookies } from 'next/headers';
-import { verifyToken } from "./jwt";
+import { verifyToken,decodeToken } from "./jwt";
 import { User } from "@/types"
 
 export async function getCurrentUser() {
   const token = (await cookies()).get('token')?.value;
   if (!token) return null;
-  return verifyToken(token);
+  //return verifyToken(token);
+  return decodeToken(token);
 }
 
 export const simulatedLogin = async (username: string, password: string): Promise<{ user: User; token: string } | null> => {

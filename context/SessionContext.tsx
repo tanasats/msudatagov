@@ -5,6 +5,8 @@ import { createContext, useContext, useState, useEffect, ReactNode } from 'react
 import { User, SessionContextType } from '@/types';
 import { simulatedLogin, simulatedLogout } from '@/lib/auth'; // Import ฟังก์ชันจำลอง
 import Cookies from 'js-cookie';
+import { useRouter } from 'next/navigation';
+import { verifyToken } from '@/lib/jwt';
 
 const SessionContext = createContext<SessionContextType | undefined>(undefined);
 
@@ -16,11 +18,13 @@ export function SessionProvider({ children }: SessionProviderProps) {
   const [user, setUser] = useState<User | null>(null);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [accessToken, setAccessToken] = useState<string | null>(null);
-  
+  const router = useRouter();
+
   // ตรวจสอบ session เมื่อโหลดครั้งแรก (จำลองจาก localStorage)
   useEffect(() => {
     const storedUser = localStorage.getItem('user');
     const storedToken = localStorage.getItem('accessToken');
+    //console.log("accessToken in localstorage : ",storedToken);
     if (storedUser && storedToken) {
       try {
         const parsedUser: User = JSON.parse(storedUser);
@@ -32,6 +36,18 @@ export function SessionProvider({ children }: SessionProviderProps) {
         logout(); // Clear invalid data
       }
     }
+
+    const loadAndVerifyToken = async () => {
+      const storedToken = localStorage.getItem('accessToken')||"";
+      const isValid = await verifyToken(storedToken);
+      //console.log("loadAndValidToken :",isValid);
+      if(!isValid){
+        logout();
+      }
+    }
+    loadAndVerifyToken();
+
+
   }, []);
 
   const login = (userData: User, token: string) => {
@@ -41,6 +57,7 @@ export function SessionProvider({ children }: SessionProviderProps) {
     localStorage.setItem('user', JSON.stringify(userData));
     localStorage.setItem('accessToken', token);
     Cookies.set("token",token);
+    router.push("/");
   };
 
   const logout = () => {
@@ -50,6 +67,7 @@ export function SessionProvider({ children }: SessionProviderProps) {
     localStorage.removeItem('user');
     localStorage.removeItem('accessToken');
     Cookies.remove("token");
+    router.push("/");
   };
 
   const value = {

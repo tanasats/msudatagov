@@ -6,21 +6,22 @@ import Link from 'next/link';
 import { useSession } from '@/context/SessionContext';
 import { Button } from './ui/button';
 import { link } from 'fs';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 import { LuChevronDown } from "react-icons/lu";
 
 export default function UserDropdown() {
   const { user, logout } = useSession();
   const [isOpen, setIsOpen] = useState(false);
+  //const router = useRouter();
 
   if (!user) return null; // ไม่แสดงถ้าไม่มี user
 
   const handleLogout = () => {
-    logout();
     setIsOpen(false);
+    logout();
     // อาจจะ redirect ไปหน้า home หรือ signin
     //window.location.href = '/signin'; // หรือใช้ useRouter().push('/')
-    useRouter().push('/');
+    //router.push('/');
   };
 
   return (

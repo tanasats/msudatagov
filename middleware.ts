@@ -2,14 +2,14 @@
 
 import { NextRequest, NextResponse } from 'next/server';
 import { jwtVerify } from 'jose';
-import { JOSEError } from 'jose/errors';
+//import { JOSEError } from 'jose/errors';
 
 // ระบุ secret key
 // const SECRET = process.env.JWT_SECRET || 'supersecretkey';
 const secret = new TextEncoder().encode(process.env.JWT_SECRET || 'supersecretkey');
 
 // เส้นทางที่เข้าถึงได้โดยไม่ต้อง auth
-const publicPaths = ['/signin', '/home','/'];
+const publicPaths = ['/','/signin', '/home','/about'];
 
 // หน้าที่ต้องการ role แต่ละระดับ
 const rolePaths: Record<string, string[]> = {
@@ -42,24 +42,29 @@ export async function middleware(request: NextRequest) {
     console.log("role :",role);
 
     const allowedPaths = rolePaths[role] || [];
-
     // ตรวจสอบว่าสิทธิ์เข้าถึง route ได้หรือไม่
     if (!allowedPaths.includes(pathname)) {
-      return NextResponse.redirect(new URL('/signin', request.url));
+      return NextResponse.redirect(new URL('/dashboard', request.url));
     }
-
     // ผ่านการตรวจสอบ
     return NextResponse.next();
 
   } catch (error) {
     console.error('middleware found JWT verification failed : ', (error as any)?.code);
-    return NextResponse.redirect(new URL('/signin', request.url));
+    return NextResponse.redirect(new URL('/home', request.url));
   }
 }
 
 // ให้ middleware ทำงานกับเส้นทางทั้งหมด ยกเว้น static files
 export const config = {
-  matcher: ['/((?!_next/static|_next/image|favicon.ico).*)'],
+  // matcher: ['/((?!_next/static|_next/image|favicon.ico).*)'],
+  // matcher: [
+  //   '/((?!_next/static|_next/image|favicon.ico|.*\\.png|.*\\.jpg|.*\\.svg|.*\\.webp|.*\\.jpeg).*)',
+  // ],
+    matcher: [
+    '/((?!_next/static|_next/image|favicon.ico|.*\\.png|.*\\.jpg|.*\\.svg|.*\\.webp|.*\\.jpeg).*)',
+  ],
+
 };
 
 
