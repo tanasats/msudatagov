@@ -1,0 +1,58 @@
+# .github/workflows/deploy.yml
+name: Deploy Next.js to Ubuntu
+
+on:
+  push:
+    branches:
+      - main # หรือ branch ที่คุณต้องการให้ Trigger การ Deploy
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20" # หรือเวอร์ชัน Node.js ที่คุณใช้
+
+      - name: Install dependencies
+        run: npm ci # ใช้ npm ci เพื่อการติดตั้งที่สะอาดและรวดเร็วกว่า npm install
+
+      - name: Build Next.js application
+        run: npm run build
+
+      - name: SSH and Deploy
+        uses: appleboy/ssh-action@v1.0.0
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            # เปลี่ยน Directory ไปยังโฟลเดอร์ของ Application
+            cd /home/tanasat/msudatagov
+
+            # ลบไฟล์เก่าออก (ระวังถ้ามีไฟล์ config ที่ไม่ต้องการลบ)
+            # ถ้าคุณมีไฟล์ที่ต้องการคงไว้ใน server ให้พิจารณา rsync หรือการจัดการที่ซับซ้อนขึ้น
+            rm -rf ./*
+
+            # ส่งไฟล์ที่ Build แล้วจาก GitHub Actions ไปยัง Server
+            # `.` หมายถึง current directory บน GitHub Actions Runner
+            # `/home/tanasat/msudatagov` คือปลายทางบน Server
+            rsync -avz --exclude 'node_modules' --exclude '.git' --exclude '.next/cache' . /home/tanasat/msudatagov/
+
+            # ติดตั้ง dependencies บน Server (ถ้าจำเป็น บางครั้งก็ Build บน GitHub Actions แล้วพอ)
+            # ถ้า Build บน GitHub Actions แล้วอาจจะไม่ต้อง npm install อีก
+            # npm install --production # ติดตั้งเฉพาะ production dependencies
+
+            # Start/Restart Application ด้วย PM2
+            #pm2 stop msudatagov:3001 || true # หยุด App ถ้ากำลังรันอยู่ (|| true เพื่อไม่ให้ Workflow fail ถ้า App ยังไม่รัน)
+            #pm2 delete msudatagov:3001 || true # ลบ Process เก่า (|| true เพื่อไม่ให้ Workflow fail ถ้า App ยังไม่มี)
+            #pm2 start ecosystem.config.js # สั่งรัน App ด้วย PM2
+
+            # บันทึกสถานะ PM2 เพื่อให้ App รันอัตโนมัติเมื่อ Server รีบูต
+            #pm2 save
+            #pm2 startup systemd # ถ้ายังไม่เคยทำมาก่อน (ครั้งแรกเท่านั้น)
