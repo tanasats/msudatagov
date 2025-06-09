@@ -49,10 +49,10 @@ jobs:
             # npm install --production # ติดตั้งเฉพาะ production dependencies
 
             # Start/Restart Application ด้วย PM2
-            pm2 stop msudatagov:3001 || true # หยุด App ถ้ากำลังรันอยู่ (|| true เพื่อไม่ให้ Workflow fail ถ้า App ยังไม่รัน)
-            pm2 delete msudatagov:3001 || true # ลบ Process เก่า (|| true เพื่อไม่ให้ Workflow fail ถ้า App ยังไม่มี)
-            pm2 start ecosystem.config.js # สั่งรัน App ด้วย PM2
+            #pm2 stop msudatagov:3001 || true # หยุด App ถ้ากำลังรันอยู่ (|| true เพื่อไม่ให้ Workflow fail ถ้า App ยังไม่รัน)
+            #pm2 delete msudatagov:3001 || true # ลบ Process เก่า (|| true เพื่อไม่ให้ Workflow fail ถ้า App ยังไม่มี)
+            #pm2 start ecosystem.config.js # สั่งรัน App ด้วย PM2
 
             # บันทึกสถานะ PM2 เพื่อให้ App รันอัตโนมัติเมื่อ Server รีบูต
-            pm2 save
-            pm2 startup systemd # ถ้ายังไม่เคยทำมาก่อน (ครั้งแรกเท่านั้น)
+            #pm2 save
+            #pm2 startup systemd # ถ้ายังไม่เคยทำมาก่อน (ครั้งแรกเท่านั้น)
