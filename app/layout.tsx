@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Sarabun } from "next/font/google";
 import "./globals.css";
-import TopNav from "./components/TopNav";
 import { SessionProvider } from "@/context/SessionContext";
 
 const geistSans = Geist({

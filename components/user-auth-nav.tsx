@@ -7,40 +7,40 @@ import { useRouter } from "next/navigation";
 import { useSession } from "@/context/SessionContext";
 
 // จำลองการใช้ Session Context (แทนที่ด้วย useSession ของคุณ)
-interface SessionContextType {
-  user: { name: string } | null;
-  isAuthenticated: boolean;
-  login: () => void; // จำลอง
-  logout: () => void; // จำลอง
-}
+// interface SessionContextType {
+//   user: { name: string } | null;
+//   isAuthenticated: boolean;
+//   login: () => void; // จำลอง
+//   logout: () => void; // จำลอง
+// }
 
-const useMockSession = (): SessionContextType => {
-  const [user, setUser] = React.useState<{ name: string } | null>(null);
-  const [isAuthenticated, setIsAuthenticated] = React.useState(false);
+// const useMockSession = (): SessionContextType => {
+//   const [user, setUser] = React.useState<{ name: string } | null>(null);
+//   const [isAuthenticated, setIsAuthenticated] = React.useState(false);
 
-  React.useEffect(() => {
-    const storedUser = localStorage.getItem('mockUser');
-    if (storedUser) {
-      setUser(JSON.parse(storedUser));
-      setIsAuthenticated(true);
-    }
-  }, []);
+//   React.useEffect(() => {
+//     const storedUser = localStorage.getItem('mockUser');
+//     if (storedUser) {
+//       setUser(JSON.parse(storedUser));
+//       setIsAuthenticated(true);
+//     }
+//   }, []);
 
-  const login = () => {
-    const mockUser = { name: "John Doe" };
-    setUser(mockUser);
-    setIsAuthenticated(true);
-    localStorage.setItem('mockUser', JSON.stringify(mockUser));
-  };
+//   const login = () => {
+//     const mockUser = { name: "John Doe" };
+//     setUser(mockUser);
+//     setIsAuthenticated(true);
+//     localStorage.setItem('mockUser', JSON.stringify(mockUser));
+//   };
 
-  const logout = () => {
-    setUser(null);
-    setIsAuthenticated(false);
-    localStorage.removeItem('mockUser');
-  };
+//   const logout = () => {
+//     setUser(null);
+//     setIsAuthenticated(false);
+//     localStorage.removeItem('mockUser');
+//   };
 
-  return { user, isAuthenticated, login, logout };
-};
+//   return { user, isAuthenticated, login, logout };
+// };
 
 export function UserAuthNav() {
   const { user, isAuthenticated,logout } = useSession();

@@ -6,7 +6,6 @@ import { msu_auth } from '../actions/msu-auth'
 import Link from 'next/link'
 import { useSession } from '@/context/SessionContext';
 //import { User } from '@/types'
-import { useRouter } from 'next/router'
 import Image from 'next/image'
 import { LuBug } from 'react-icons/lu'
 import { EyeIcon, EyeOffIcon } from 'lucide-react'

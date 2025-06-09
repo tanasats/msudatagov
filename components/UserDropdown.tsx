@@ -4,9 +4,6 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { useSession } from '@/context/SessionContext';
-import { Button } from './ui/button';
-import { link } from 'fs';
-import { useRouter } from 'next/navigation';
 import { LuChevronDown } from "react-icons/lu";
 
 export default function UserDropdown() {

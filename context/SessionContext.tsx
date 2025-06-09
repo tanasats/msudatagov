@@ -3,7 +3,7 @@
 
 import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { User, SessionContextType } from '@/types';
-import { simulatedLogin, simulatedLogout } from '@/lib/auth'; // Import ฟังก์ชันจำลอง
+//import { simulatedLogin, simulatedLogout } from '@/lib/auth'; // Import ฟังก์ชันจำลอง
 import Cookies from 'js-cookie';
 import { useRouter } from 'next/navigation';
 import { verifyToken } from '@/lib/jwt';

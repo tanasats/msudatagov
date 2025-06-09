@@ -1,8 +1,9 @@
 import React from 'react'
 import { getCurrentUser } from '@/lib/auth'
+import { User } from '@/types';
 
 const ProfilePage = async () => {
-  const user: any = await getCurrentUser();
+  const user: User = await getCurrentUser() as User;
 
   return (
     <div className='container mx-auto px-4 sm:px-6 lg:px-8'>
