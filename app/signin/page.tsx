@@ -54,7 +54,7 @@ const SigninPage = () => {
                                 <LuBug className='w-10 h-10 text-white' />
                             </div>
                             <div className='text-4xl font-bold'>
-                                MSU App
+                                Data MSU
                             </div>
                         </div>
 
@@ -82,10 +82,10 @@ const SigninPage = () => {
                             </Link>
                         </div> */}
                         <div>or</div>
-                        <Button variant={"default"}>เข้าสู่ระบบ ด้วย MSU mail</Button>
+                        <Button variant={"secondary"} className='bg-blue-200 hover:bg-blue-100'>เข้าสู่ระบบ ด้วย MSU mail</Button>
                         <div className='flex justify-between'>
-                        <Link href={"/"} className='text-sm'>กลับหน้าหลัก</Link>
-                        <div>?</div>
+                        <Link href={"/"} className='text-sm py-2 px-4 rounded-lg hover:bg-gray-100'>กลับหน้าหลัก</Link>
+
                         </div>
 
                     </div>

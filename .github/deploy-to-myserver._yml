@@ -5,7 +5,7 @@ on:
   push:
     branches:
       - main # หรือ branch ที่คุณต้องการให้ Trigger การ Deploy
-
+ 
 jobs:
   deploy:
     runs-on: ubuntu-latest

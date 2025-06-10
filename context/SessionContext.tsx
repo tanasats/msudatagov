@@ -24,6 +24,7 @@ export function SessionProvider({ children }: SessionProviderProps) {
   useEffect(() => {
     const storedUser = localStorage.getItem('user');
     const storedToken = localStorage.getItem('accessToken');
+    
     //console.log("accessToken in localstorage : ",storedToken);
     if (storedUser && storedToken) {
       try {

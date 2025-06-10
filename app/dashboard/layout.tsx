@@ -3,7 +3,9 @@
 // ซึ่งตอนนี้ใน layout.tsx เรากำลังเรียก <Navbar /> ซึ่ง อาจเป็น Component ที่ใช้ React Hook ด้านใน
 // และ React Hook เช่น useState, useContext, useEffect จะ ไม่สามารถเรียกใน Server Component ได้
 // วิธีแก้ไข : ทำให้ layout.tsx เป็น Client Component เพิ่ม "use client" ที่บรรทัดบนสุดของ app/dashboard/layout.tsx
-import Header from "@/components/Header";
+
+import Nav from "@/components/Navbar/Nav";
+import ResponsiveNav from "@/components/Navbar/ResponsiveNav";
 
 export default function DashboardLayout({
   children,
@@ -12,8 +14,9 @@ export default function DashboardLayout({
 }>) {
   return (
     <div>
-      <Header/>
+      <ResponsiveNav/>
       {/* <Navbar/> */}
+      <div className="pt-[12vh]"></div>
       {children}  
     </div>
     

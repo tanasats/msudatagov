@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { useSession } from '@/context/SessionContext';
 import UserDropdown from './UserDropdown';
 
-export default function Navbar() {
+export default function xxNavbar() {
   const { isAuthenticated } = useSession();
 
   return (

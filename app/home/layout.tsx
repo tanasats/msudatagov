@@ -1,5 +1,6 @@
 "use client"
 import Header from "@/components/Header";
+import ResponsiveNav from "@/components/Navbar/ResponsiveNav";
 
 export default function HomeLayout({
   children,
@@ -9,7 +10,8 @@ export default function HomeLayout({
   return (
     <div>
       {/* <Navbar/> */}
-      <Header />
+      <ResponsiveNav/>
+      {/* <Header /> */}
       {children}  
     </div>
     

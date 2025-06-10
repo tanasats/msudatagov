@@ -118,8 +118,9 @@
   }
   body {
     @apply bg-background text-foreground;
-    font-family: var(--font-sarabun);
+    font-family: var(--font-prompt);
     font-weight: 300;
+    color:#333;
   }
   button,[role="button"]{
     cursor:pointer;

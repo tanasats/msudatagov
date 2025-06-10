@@ -1,12 +1,42 @@
 "use client"
+import Image from 'next/image'
+import Link from 'next/link'
 import React from 'react'
 
 const HomePage = () => {
- 
-  return (
-    <div className='container mx-auto px-4 sm:px-6 lg:px-8'>
-      <div>Landing page</div>
 
+  return (
+    // <div className='container mx-auto px-4 sm:px-6 lg:px-8'>
+    //   <div>Landing page</div>
+
+    //   <div className="h-[1000px]">
+    //     Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa illum pariatur omnis quia ullam earum quas itaque magni, dolor unde vitae. Vel repellendus voluptate commodi quas exercitationem corporis eos error.
+    //   </div>
+    // </div>
+
+    <div className="relative w-full h-screen flex justify-center flex-col">
+      <div className="w-[90%] md:w-[80%] mx-auto grid items-center grid-cols-1 xl:grid-cols-2 gap-10">
+        {/* Text content */}
+        <div>
+          <h1 className="text-3xl md:text-4xl lg:text-5xl mt-6 font-extrabold leading-[2.5rem] md:leading-[4rem]">
+            <span className="text-pink-600">Data</span>
+            -Driven Decision Making 
+          </h1>
+          {/* Sub header */}
+          <p className='text-2xl'>
+            -- การตัดสินใจโดยการขับเคลื่อนด้วยข้อมูล 
+          </p>
+          <div className='mt-8'>
+            <Link href={"/signin"} className='text-xl px-8 py-2.5 text-white bg-blue-500 hover:bg-blue-600 w-fit rounded-full cursor-pointer'>
+              เข้าใช้งานระบบ
+            </Link>
+          </div>
+        </div>
+        {/* Image content */}
+        <div className='flex justify-center'>
+          <Image src="/images/1.png" alt="img" width={500} height={500}/>
+        </div>
+      </div>
     </div>
 
   )
