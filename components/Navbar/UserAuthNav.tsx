@@ -5,6 +5,7 @@ import * as React from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useSession } from "@/context/SessionContext";
+import LogoutModal from "../Modal/logout-modal";
 
 // จำลองการใช้ Session Context (แทนที่ด้วย useSession ของคุณ)
 // interface SessionContextType {
@@ -43,19 +44,20 @@ import { useSession } from "@/context/SessionContext";
 // };
 
 export function UserAuthNav() {
-  const { user, isAuthenticated,logout } = useSession();
+  const { user, isAuthenticated, logout } = useSession();
   //const { user, isAuthenticated, logout, login } = useMockSession(); // เปลี่ยนเป็น useSession() ในโปรเจกต์จริง
   const router = useRouter();
   const [isDropdownOpen, setIsDropdownOpen] = React.useState(false);
   const dropdownRef = React.useRef<HTMLDivElement>(null);
+  const [openLogoutModal, setOpenLogoutModal] = React.useState(false);
 
-  const handleLogout = () => {
+  const handlerLogout = () => {
     logout();
     setIsDropdownOpen(false);
     router.push("/");
   };
 
-  const handleLogin = () => {
+  const handlerLogin = () => {
     router.push("/signin");
   };
 
@@ -89,7 +91,7 @@ export function UserAuthNav() {
           >
             {user?.name.charAt(0)}
             {user?.name.split(" ")[1].charAt(0)}
-            
+
           </button>
 
           {isDropdownOpen && (
@@ -107,7 +109,7 @@ export function UserAuthNav() {
                 Profile
               </Link>
               <button
-                onClick={handleLogout}
+                onClick={() => setOpenLogoutModal(true)}
                 className="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-100"
               >
                 Log out
@@ -117,12 +119,19 @@ export function UserAuthNav() {
         </div>
       ) : (
         <button
-          onClick={handleLogin} // เปลี่ยนเป็น onClick={handleLogin} ในโปรเจกต์จริง
+          onClick={handlerLogin} // เปลี่ยนเป็น onClick={handlerLogin} ในโปรเจกต์จริง
           className="px-8 py-2.5 rounded-xl  hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-300 focus:ring-offset-2"
         >
           Login
         </button>
       )}
+
+      <LogoutModal
+        isOpen={openLogoutModal}
+        onClose={() => setOpenLogoutModal(false)}
+        onConfirm={handlerLogout}
+      />
+
     </>
   );
 }

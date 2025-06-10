@@ -14,7 +14,8 @@ const HomePage = () => {
     //   </div>
     // </div>
 
-    <div className="relative w-full h-screen flex justify-center flex-col">
+    <div className="relative w-full flex justify-center flex-col">
+
       <div className="w-[90%] md:w-[80%] mx-auto grid items-center grid-cols-1 xl:grid-cols-2 gap-10">
         {/* Text content */}
         <div>
@@ -23,8 +24,8 @@ const HomePage = () => {
             -Driven Decision Making 
           </h1>
           {/* Sub header */}
-          <p className='text-2xl'>
-            -- การตัดสินใจโดยการขับเคลื่อนด้วยข้อมูล 
+          <p className='text-xl md:text-2xl mt-2'>
+            -- การตัดสินใจโดยการขับเคลื่อนด้วยข้อมูล --
           </p>
           <div className='mt-8'>
             <Link href={"/signin"} className='text-xl px-8 py-2.5 text-white bg-blue-500 hover:bg-blue-600 w-fit rounded-full cursor-pointer'>
@@ -37,6 +38,7 @@ const HomePage = () => {
           <Image src="/images/1.png" alt="img" width={500} height={500}/>
         </div>
       </div>
+
     </div>
 
   )

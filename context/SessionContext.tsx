@@ -22,8 +22,10 @@ export function SessionProvider({ children }: SessionProviderProps) {
 
   // ตรวจสอบ session เมื่อโหลดครั้งแรก (จำลองจาก localStorage)
   useEffect(() => {
-    const storedUser = localStorage.getItem('user');
-    const storedToken = localStorage.getItem('accessToken');
+    //const storedUser = localStorage.getItem('user');
+    //const storedToken = localStorage.getItem('accessToken');
+    const storedUser = Cookies.get("user");
+    const storedToken = Cookies.get("token");
     
     //console.log("accessToken in localstorage : ",storedToken);
     if (storedUser && storedToken) {
@@ -39,7 +41,8 @@ export function SessionProvider({ children }: SessionProviderProps) {
     }
 
     const loadAndVerifyToken = async () => {
-      const storedToken = localStorage.getItem('accessToken')||"";
+      //const storedToken = localStorage.getItem('accessToken')||"";
+      const storedToken = Cookies.get("token")?.toString()||"";
       const isValid = await verifyToken(storedToken);
       //console.log("loadAndValidToken :",isValid);
       if(!isValid){
@@ -55,9 +58,13 @@ export function SessionProvider({ children }: SessionProviderProps) {
     setUser(userData);
     setAccessToken(token);
     setIsAuthenticated(true);
-    localStorage.setItem('user', JSON.stringify(userData));
-    localStorage.setItem('accessToken', token);
-    Cookies.set("token",token);
+    //localStorage.setItem('user', JSON.stringify(userData));
+    //localStorage.setItem('accessToken', token);
+
+
+    Cookies.set("user",JSON.stringify(userData),{expires:1,secure:true});
+    Cookies.set("token",token,{expires:1,secure:true});
+
     router.push("/");
   };
 
@@ -65,8 +72,9 @@ export function SessionProvider({ children }: SessionProviderProps) {
     setUser(null);
     setAccessToken(null);
     setIsAuthenticated(false);
-    localStorage.removeItem('user');
-    localStorage.removeItem('accessToken');
+    //localStorage.removeItem('user');
+    //localStorage.removeItem('accessToken');
+    Cookies.remove("user");
     Cookies.remove("token");
     router.push("/");
   };

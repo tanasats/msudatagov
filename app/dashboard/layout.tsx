@@ -14,8 +14,9 @@ export default function DashboardLayout({
   return (
     <div>
       <ResponsiveNav/>
-      <div className="pt-[12vh]"></div>
-      {children}  
+      <div className="pt-[12vh]">
+        {children}
+      </div>  
     </div>
     
   )

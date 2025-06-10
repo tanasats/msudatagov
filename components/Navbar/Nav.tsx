@@ -5,13 +5,15 @@ import Link from 'next/link'
 import React, { useEffect, useState } from 'react'
 import { LuBug } from 'react-icons/lu'
 import { UserAuthNav } from './UserAuthNav'
+import { useSession } from '@/context/SessionContext'
 
 type Props = {
   openNav: () => void;
 }
 
 const Nav = ({ openNav }: Props) => {
-  const [navBg, setNavBg] = useState(false);
+  const { isAuthenticated } = useSession()
+  const [ navBg, setNavBg ] = useState(false);
   //const router = useRouter();
   // const handlerLogin = () => {
   //   router.push("/signin");
@@ -39,8 +41,9 @@ const Nav = ({ openNav }: Props) => {
           </Link>
         </div>
         {/* Navlinks */}
-        <div className="hidden lg:flex items-center space-x-8">
-          {Navlinks.map((link) => {
+        <div className="hidden lg:flex items-center space-x-4">
+
+          {isAuthenticated && Navlinks.map((link) => {
             return (
               <Link
                 key={link.id}
@@ -51,10 +54,11 @@ const Nav = ({ openNav }: Props) => {
               </Link>
             )
           })}
+          
         </div>
         <div className='flex'>
           {/* Join buttons */}
-          <UserAuthNav/>
+          <UserAuthNav />
           {/* <div onClick={handlerLogin} className='hover:bg-slate-100 px-8 py-2.5 rounded-full cursor-pointer'>
             เข้าระบบ
           </div> */}

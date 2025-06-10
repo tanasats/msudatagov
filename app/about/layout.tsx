@@ -11,7 +11,7 @@ export default function HomeLayout({
       <ResponsiveNav/>
       {/* <Navbar/> */}
       <div className="pt-[12vh]"></div>
-      {children}  
+        {children} 
     </div>
     
   )

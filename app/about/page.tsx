@@ -1,10 +1,13 @@
 import React from 'react'
 const AboutPage = async () => {
   return (
-    <div className='container mx-auto px-4 sm:px-6 lg:px-8'>
-      About
-
-
+    <div className="w-[90%] md:w-[80%] mx-auto">
+      <section className="mt-4 p-4">
+        About
+      </section>
+      <section className='bg-blue-50 rounded-xl mt-4 p-4'>
+        xxx
+      </section>
     </div>
   );
 }

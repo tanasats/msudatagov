@@ -9,6 +9,7 @@ export default function HomeLayout({
   return (
     <div>
       <ResponsiveNav/>
+      <div className="h-[12vh]"></div>
       {children}  
     </div>
     

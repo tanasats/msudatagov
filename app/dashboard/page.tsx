@@ -5,7 +5,7 @@ import React from 'react'
 const DashboardPage = () => {
   const {user} = useSession();
   return (
-    <div className='container mx-auto px-4 sm:px-6 lg:px-8'>
+    <div className="w-[90%] md:w-[80%] mx-auto">
       <div>Dashboard</div>
       <span className='text-sm'>สวัสดี คุณ{user?.name}</span>
     </div>
