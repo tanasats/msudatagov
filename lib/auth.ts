@@ -2,7 +2,6 @@ import { cookies } from 'next/headers';
 import { decodeToken } from "./jwt";
 import { User } from "@/types"
 
-
 export async function getCurrentUser():Promise<User|null>{
   const token = (await cookies()).get('token')?.value;
   if (!token) return null;

@@ -4,7 +4,6 @@
 // และ React Hook เช่น useState, useContext, useEffect จะ ไม่สามารถเรียกใน Server Component ได้
 // วิธีแก้ไข : ทำให้ layout.tsx เป็น Client Component เพิ่ม "use client" ที่บรรทัดบนสุดของ app/dashboard/layout.tsx
 
-import Nav from "@/components/Navbar/Nav";
 import ResponsiveNav from "@/components/Navbar/ResponsiveNav";
 
 export default function DashboardLayout({
@@ -15,7 +14,6 @@ export default function DashboardLayout({
   return (
     <div>
       <ResponsiveNav/>
-      {/* <Navbar/> */}
       <div className="pt-[12vh]"></div>
       {children}  
     </div>

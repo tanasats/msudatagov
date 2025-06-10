@@ -1,4 +1,3 @@
-import ResponsiveNav from '@/components/Navbar/ResponsiveNav'
 import Link from 'next/link'
  
 export default function NotFound() {

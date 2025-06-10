@@ -16,7 +16,7 @@ const ProfilePage = async () => {
         <div>role : {user?.role}</div>
       </>
       }
-
+ 
     </div>
   );
 }

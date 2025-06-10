@@ -1,10 +1,9 @@
 "use client"
 import { Navlinks } from '@/constant/constant'
 import Link from 'next/link'
-import { useRouter } from 'next/navigation'
+//import { useRouter } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
 import { LuBug } from 'react-icons/lu'
-import { Button } from '../ui/button'
 import { UserAuthNav } from './UserAuthNav'
 
 type Props = {
@@ -13,10 +12,10 @@ type Props = {
 
 const Nav = ({ openNav }: Props) => {
   const [navBg, setNavBg] = useState(false);
-  const router = useRouter();
-  const handlerLogin = () => {
-    router.push("/signin");
-  }
+  //const router = useRouter();
+  // const handlerLogin = () => {
+  //   router.push("/signin");
+  // }
 
   useEffect(() => {
     const handlerScroll = () => {
