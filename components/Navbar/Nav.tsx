@@ -56,7 +56,7 @@ const Nav = ({ openNav }: Props) => {
           })}
           
         </div>
-        <div className='flex'>
+        <div className='flex items-center'>
           {/* Join buttons */}
           <UserAuthNav />
           {/* <div onClick={handlerLogin} className='hover:bg-slate-100 px-8 py-2.5 rounded-full cursor-pointer'>

@@ -27,6 +27,7 @@ export const msu_auth = async (username: string, password: string) => {
         //     email:data.mail,
         //     role:'member',
         // });
+
         if(data){
         const userdata:User = {
             id:'0',
@@ -42,14 +43,9 @@ export const msu_auth = async (username: string, password: string) => {
             return {user:userdata,token:token};        
         }
 
-           
-
-
-
         //return data;
         //return {user:{id:1,username:data.username},token:token};
        
-
     } catch (error) {
         console.log(error)
         return ({ "message": error || "Login failed" })

@@ -16,3 +16,16 @@ export interface SessionContextType {
   logout: () => void;
   accessToken: string | null;
 }
+
+export interface IUser {
+    id?:number;
+    username:string;
+    name:string;
+    email:string;
+    usertype?:string;
+    staffid?:string;
+    faculty?:string;
+    citizenid?:string;
+    created?:string;
+    updated?:string;
+}

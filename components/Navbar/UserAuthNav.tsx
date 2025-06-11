@@ -6,6 +6,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useSession } from "@/context/SessionContext";
 import LogoutModal from "../Modal/logout-modal";
+import { LuLogIn } from "react-icons/lu";
 
 // จำลองการใช้ Session Context (แทนที่ด้วย useSession ของคุณ)
 // interface SessionContextType {
@@ -52,8 +53,9 @@ export function UserAuthNav() {
   const [openLogoutModal, setOpenLogoutModal] = React.useState(false);
 
   const handlerLogout = () => {
-    logout();
+    setOpenLogoutModal(false);
     setIsDropdownOpen(false);
+    logout();
     router.push("/");
   };
 
@@ -91,7 +93,6 @@ export function UserAuthNav() {
           >
             {user?.name.charAt(0)}
             {user?.name.split(" ")[1].charAt(0)}
-
           </button>
 
           {isDropdownOpen && (
@@ -118,12 +119,21 @@ export function UserAuthNav() {
           )}
         </div>
       ) : (
-        <button
-          onClick={handlerLogin} // เปลี่ยนเป็น onClick={handlerLogin} ในโปรเจกต์จริง
-          className="px-8 py-2.5 rounded-xl  hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-300 focus:ring-offset-2"
-        >
-          Login
-        </button>
+        // <button
+        //   onClick={handlerLogin} // เปลี่ยนเป็น onClick={handlerLogin} ในโปรเจกต์จริง
+        //   className="px-8 py-2.5 rounded-xl  hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-300 focus:ring-offset-2"
+        // >
+        //   Login
+        // </button>
+
+          <button
+            onClick={handlerLogin}
+            className="flex items-center justify-center h-12 w-12 mx-4 text-2xl rounded-full bg-gray-200 text-gray-800 hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2"
+          >
+            <LuLogIn/>
+          </button>
+
+
       )}
 
       <LogoutModal

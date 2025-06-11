@@ -8,11 +8,13 @@ const ProfilePage = async () => {
 
   return (
     <div className='w-[90%] md:w-[80%] mx-auto'>
-      <div className='flex flex-col gap-4 w-[350px] bg-slate-50 p-8'>
+      {/* User profile card */}
+      <div className='flex flex-col gap-4 w-[350px] bg-slate-50 p-8 rounded-xl'>
         <div className='flex justify-center'>
           <Image src={"/images/avatar.jpg"} width={250} height={250} alt="avatar" className='border border-gray-300 p-2 rounded-lg'/>
+          {/* <Image src={"https://pd.msu.ac.th/staff/picture/5002658.jpg"} width={250} height={250} alt="avatar" className='border border-gray-300 p-2 rounded-lg'/> */}
         </div>
-        <div>
+        <div className='w-[250px] mx-auto'>
               {user && <>
                 <div className='text-2xl'>{user?.name}</div>
                 <div>{user?.faculty}</div>
@@ -20,9 +22,10 @@ const ProfilePage = async () => {
                 <div>{user?.role}</div>
               </>
               }
-          
+            
           </div>
       </div>
+      {/* User activity info */}
 
 
 

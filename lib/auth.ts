@@ -10,25 +10,3 @@ export async function getCurrentUser():Promise<User|null>{
   const user = decode;
   return user;
 }
-
-// export const simulatedLogin = async (username: string, password: string): Promise<{ user: User; token: string } | null> => {
-//   // จำลองการตรวจสอบข้อมูล
-//   if (username === 'test' && password === 'password') {
-//     const user: User = {
-//       id: '123',
-//       username: 'test',
-//       name: 'Test User',
-//       email: '_test@example.com_',
-//       faculty: '_faculty_',
-//       role:'member',
-//     };
-//     const token = 'fake-jwt-token-12345';
-//     return { user, token };
-//   }
-//   return null;
-// };
-
-// export const simulatedLogout = async (): Promise<boolean> => {
-//   // จำลองการล้าง token หรือ session บน server
-//   return true;
-// };
