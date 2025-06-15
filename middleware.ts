@@ -1,15 +1,13 @@
-// middleware.ts  (use jwt on edge runtime with jose library)
-
+// middleware.ts  (edge runtime ไม่สามารถใช้  jsonwebtoken ได้ต้องใช้  jose แทน)
 import { NextRequest, NextResponse } from 'next/server';
 import { jwtVerify } from 'jose';
 //import { JOSEError } from 'jose/errors';
 
-// ระบุ secret key
-// const SECRET = process.env.JWT_SECRET || 'supersecretkey';
-const secret = new TextEncoder().encode(process.env.JWT_SECRET || 'supersecretkey');
+const secret = new TextEncoder().encode(process.env.JWT_SECRET || "supersecretkey"); //<----msu_auth OK
+//const secret = new TextEncoder().encode("supersecretkey");   //<-- google OK
 
 // เส้นทางที่เข้าถึงได้โดยไม่ต้อง auth
-const publicPaths = ['/','/signin', '/home','/about'];
+const publicPaths = ['/','/signin','/about',];
 
 // หน้าที่ต้องการ role แต่ละระดับ
 const rolePaths: Record<string, string[]> = {
@@ -21,51 +19,64 @@ const rolePaths: Record<string, string[]> = {
 // Middleware หลัก
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
-  console.log("current path: ",pathname);
+  console.log("middleware current path: ",pathname);
 
   // ถ้าเป็นเส้นทาง public ก็อนุญาตให้ผ่านได้เลย
   if (publicPaths.includes(pathname)) {
     return NextResponse.next();
   }
 
-  const token = request.cookies.get('token')?.value;
   // หากไม่มี token ให้ redirect ไปหน้า signin
+  const token = request.cookies.get('token')?.value;
   if (!token) {
     return NextResponse.redirect(new URL('/signin', request.url));
   }
-
-
+  console.log("middleware get Token=",token);
   try {
     // ตรวจสอบ token
     const { payload } = await jwtVerify(token, secret);
     const role = payload.role as string;
-    console.log("role :",role);
-
-    const allowedPaths = rolePaths[role] || [];
+    console.log("middleware Token Validate -> role :",role);
     // ตรวจสอบว่าสิทธิ์เข้าถึง route ได้หรือไม่
+    const allowedPaths = rolePaths[role] || [];
     if (!allowedPaths.includes(pathname)) {
-      return NextResponse.redirect(new URL('/dashboard', request.url));
+      return NextResponse.redirect(new URL('/', request.url));
     }
     // ผ่านการตรวจสอบ
     return NextResponse.next();
 
   } catch (error) {
+    console.log(error);
     console.error('middleware found JWT verification failed : ', (error as any)?.code);
-    return NextResponse.redirect(new URL('/home', request.url));
+    return NextResponse.redirect(new URL('/', request.url));
   }
 }
 
 // ให้ middleware ทำงานกับเส้นทางทั้งหมด ยกเว้น static files
 export const config = {
-  // matcher: ['/((?!_next/static|_next/image|favicon.ico).*)'],
-  // matcher: [
-  //   '/((?!_next/static|_next/image|favicon.ico|.*\\.png|.*\\.jpg|.*\\.svg|.*\\.webp|.*\\.jpeg).*)',
-  // ],
     matcher: [
-    '/((?!_next/static|_next/image|favicon.ico|.*\\.png|.*\\.jpg|.*\\.svg|.*\\.webp|.*\\.jpeg).*)',
+    '/((?!api/auth|_next/static|_next/image|favicon.ico|.*\\.png|.*\\.jpg|.*\\.svg|.*\\.webp|.*\\.jpeg).*)',
   ],
-
 };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

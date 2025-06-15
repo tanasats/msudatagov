@@ -1,10 +1,17 @@
-import React from 'react'
-import { getCurrentUser } from '@/lib/auth'
-import { User } from '@/types';
+"use client"
+import React, { useEffect } from 'react'
 import Image from 'next/image';
+//import { useSession } from 'next-auth/react';
+import { useSessionContext } from '@/context/SessionContext';
+import { useSession } from 'next-auth/react';
 
-const ProfilePage = async () => {
-  const user: User = await getCurrentUser() as User;
+
+const ProfilePage = () => {
+  const {data:session} = useSession();
+  const {user} = useSessionContext()
+  useEffect(()=>{
+    
+  },[])
 
   return (
     <div className='w-[90%] md:w-[80%] mx-auto'>
@@ -22,7 +29,11 @@ const ProfilePage = async () => {
                 <div>{user?.role}</div>
               </>
               }
-            
+              <div>
+                {session && (
+                  <div className=' mt-2 text-slate-400 text-[12px] italic'>Signin by Google</div>
+                )}
+              </div>
           </div>
       </div>
       {/* User activity info */}

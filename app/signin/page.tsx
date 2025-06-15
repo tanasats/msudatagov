@@ -4,17 +4,21 @@ import { Input } from '@/components/ui/input'
 import React, { FormEvent, useState } from 'react'
 import { msu_auth } from '../actions/msu-auth'
 import Link from 'next/link'
-import { useSession } from '@/context/SessionContext';
-//import { User } from '@/types'
+import { useSessionContext } from '@/context/SessionContext';
 import Image from 'next/image'
 import { LuBug } from 'react-icons/lu'
 import { EyeIcon, EyeOffIcon } from 'lucide-react'
 import { toast } from 'react-hot-toast'
-
+import { signIn } from 'next-auth/react'
+//import { User } from '@/types'
+//import { signToken } from '@/lib/jwt'
 
 const SigninPage = () => {
+    console.log("SigninPage()--------------")
+    //const { data: session } = useSession();
     const [showPassword, setShowPassword] = useState(false);
-    const { login } = useSession();
+    const { login } = useSessionContext();
+    const APP_NAME = process.env.NEXT_PUBLIC_APP_NAME;
 
     const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -25,11 +29,8 @@ const SigninPage = () => {
             toast.error("โปรดกรอก username/password ให้ครบ");
             return
         }
-        //console.log("Submit Signin form");
         if (!username || !password) return;
         const data = await msu_auth(username, password);
-        // console.log("msu_auth() :", data);
-
 
         if (data?.user && data?.token) {
             login(data.user, data.token);
@@ -37,11 +38,27 @@ const SigninPage = () => {
         } else {
             toast.error("ชื่อผู้ใช้งาน หรือรหัสผ่าน ไม่ถูกต้อง")
         }
-
-
-
     }
 
+    // useEffect(() => {
+    //     if (session && session.user) { // google session
+    //         console.log("check next-auth session ", session);
+    //         const userdata: User = {
+    //             id: '0',
+    //             username: session.user.email ?? "",
+    //             name: session.user.name ?? "",
+    //             faculty: "",
+    //             email: session.user.email ?? "",
+    //             role: 'member',
+    //         };
+
+    //         signToken(userdata).then((token) => {
+    //             console.log("google token=",token);
+    //             login(userdata, token);
+    //             //toast.success("สวัสดี " + userdata.name + " (email authen)");
+    //         });
+    //     }
+    // }, [session])
 
     return (
         <div className='w-full bg-[url("/signin_bg.jpg")] bg-cover bg-center'>
@@ -50,14 +67,14 @@ const SigninPage = () => {
             </div>
 
             <div className="flex flex-col justify-center items-center min-h-screen z-30">
-                <div className="w-[350px] bg-gray-50 flex flex-col text-center p-8 rounded-lg shadow-2xl gap-4">
+                <div className="w-[360px] bg-gray-50 flex flex-col text-center p-8 rounded-lg shadow-2xl gap-4">
                     {/* Icon Header */}
                     <div className='flex items-center gap-5'>
                         <div className='w-16 h-16 bg-primary flex items-center justify-center rounded-full'>
                             <LuBug className='w-10 h-10 text-white' />
                         </div>
-                        <div className='text-4xl font-bold'>
-                            Data MSU
+                        <div className='text-3xl font-bold'>
+                            {APP_NAME}
                         </div>
                     </div>
 
@@ -91,7 +108,8 @@ const SigninPage = () => {
 
                     {/* Other Signin */}
                     <div>or</div>
-                    <Button variant={"secondary"} className='bg-blue-100 hover:bg-blue-50'>เข้าสู่ระบบ ด้วย MSU mail</Button>
+                    <Button onClick={() => signIn("google", { callbackUrl: "/" })} variant={"secondary"} className='bg-blue-100 hover:bg-blue-50'>เข้าสู่ระบบ ด้วย MSU mail</Button>
+
                     <div className='flex justify-between'>
                         <Link href={"/"} className='text-sm py-2 px-4 rounded-lg hover:bg-gray-100'>กลับหน้าหลัก</Link>
                     </div>

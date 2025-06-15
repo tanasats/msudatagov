@@ -1,12 +1,15 @@
-import { redirect } from 'next/navigation'
+import ResponsiveNav from '@/components/Navbar/ResponsiveNav'
+import LandingPage from './landing/page';
 
 
 export default function Home() {
-  redirect("/home");
-  // return (
-  //   <div>
-  //     <h1>Homepage-หน้าหลัก</h1>
-  //     <span>MSU SSO Template</span>
-  //   </div>
-  // );
+  //redirect("/home");
+  return (
+    <div>
+      <ResponsiveNav/>
+      <div className='pt-[12vh]'>
+        <LandingPage />
+      </div>
+    </div>
+  );
 }

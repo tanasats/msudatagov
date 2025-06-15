@@ -5,15 +5,16 @@ import Link from 'next/link'
 import React, { useEffect, useState } from 'react'
 import { LuBug } from 'react-icons/lu'
 import { UserAuthNav } from './UserAuthNav'
-import { useSession } from '@/context/SessionContext'
+import { useSessionContext } from '@/context/SessionContext'
 
 type Props = {
   openNav: () => void;
 }
 
 const Nav = ({ openNav }: Props) => {
-  const { isAuthenticated } = useSession()
+  const { isAuthenticated } = useSessionContext()
   const [ navBg, setNavBg ] = useState(false);
+  const APP_NAME = process.env.NEXT_PUBLIC_APP_NAME;
   //const router = useRouter();
   // const handlerLogin = () => {
   //   router.push("/signin");
@@ -37,7 +38,7 @@ const Nav = ({ openNav }: Props) => {
             <div className="w-12 h-12 md:w-14 md:h-14 bg-blue-500 dark:bg-white rounded-full flex items-center justify-center flex-col">
               <LuBug className='text-white text-3xl' />
             </div>
-            <h1 className="text-xl font-extrabold hidden sm:block md:text-2xl">Data MSU</h1>
+            <h1 className="text-xl font-extrabold hidden sm:block md:text-2xl">{APP_NAME}</h1>
           </Link>
         </div>
         {/* Navlinks */}

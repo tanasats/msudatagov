@@ -15,19 +15,18 @@ interface SessionProviderProps {
 }
 
 export function SessionProvider({ children }: SessionProviderProps) {
-  const [user, setUser] = useState<User | null>(null);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [user, setUser] = useState<User | null>(null);
   const [accessToken, setAccessToken] = useState<string | null>(null);
   const router = useRouter();
 
-  // ตรวจสอบ session เมื่อโหลดครั้งแรก (จำลองจาก localStorage)
+  // ตรวจสอบ session เมื่อโหลดครั้งแรก 
   useEffect(() => {
     //const storedUser = localStorage.getItem('user');
     //const storedToken = localStorage.getItem('accessToken');
     const storedUser = Cookies.get("user");
     const storedToken = Cookies.get("token");
-    
-    //console.log("accessToken in localstorage : ",storedToken);
+
     if (storedUser && storedToken) {
       try {
         const parsedUser: User = JSON.parse(storedUser);
@@ -42,41 +41,39 @@ export function SessionProvider({ children }: SessionProviderProps) {
 
     const loadAndVerifyToken = async () => {
       //const storedToken = localStorage.getItem('accessToken')||"";
-      const storedToken = Cookies.get("token")?.toString()||"";
+      console.log("SessionContext-loadAndVerifyToken()")
+      const storedToken = Cookies.get("token")?.toString() || "";
       const isValid = await verifyToken(storedToken);
-      //console.log("loadAndValidToken :",isValid);
-      if(!isValid){
+      if (!isValid) {
         logout();
       }
     }
     loadAndVerifyToken();
-
-
   }, []);
 
   const login = (userData: User, token: string) => {
+    console.log("SessionContext login()----------");
     setUser(userData);
     setAccessToken(token);
     setIsAuthenticated(true);
     //localStorage.setItem('user', JSON.stringify(userData));
     //localStorage.setItem('accessToken', token);
-
-
-    Cookies.set("user",JSON.stringify(userData),{expires:1,secure:true});
-    Cookies.set("token",token,{expires:1,secure:true});
-
+    Cookies.set("user", JSON.stringify(userData), { expires: 1, secure: true });
+    Cookies.set("token", token, { expires: 1, secure: true });
     router.push("/");
   };
 
-  const logout = () => {
-    setUser(null);
-    setAccessToken(null);
+  const logout = async () => {
+    console.log("SessionContext logout()----------");
     setIsAuthenticated(false);
-    //localStorage.removeItem('user');
-    //localStorage.removeItem('accessToken');
+    setAccessToken(null);
+    setUser(null);
     Cookies.remove("user");
     Cookies.remove("token");
-    router.push("/");
+
+    //localStorage.removeItem('user');
+    //localStorage.removeItem('accessToken');
+    //router.push("/");
   };
 
   const value = {
@@ -94,7 +91,7 @@ export function SessionProvider({ children }: SessionProviderProps) {
   );
 }
 
-export function useSession() {
+export function useSessionContext() {
   const context = useContext(SessionContext);
   if (context === undefined) {
     throw new Error('useSession must be used within a SessionProvider');

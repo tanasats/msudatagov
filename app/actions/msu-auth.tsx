@@ -37,8 +37,8 @@ export const msu_auth = async (username: string, password: string) => {
             email:data.mail,
             role:'member',
         };  
-            const token = signToken(userdata); 
-            console.log('token: ',token);
+            const token = await signToken(userdata); 
+            console.log('msuauth token: ',token);
             //cookieStore.set('token', token); 
             return {user:userdata,token:token};        
         }
