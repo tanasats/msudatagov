@@ -3,7 +3,6 @@
 
 import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { User, SessionContextType } from '@/types';
-//import { simulatedLogin, simulatedLogout } from '@/lib/auth'; // Import ฟังก์ชันจำลอง
 import Cookies from 'js-cookie';
 import { useRouter } from 'next/navigation';
 import { verifyToken } from '@/lib/jwt';
@@ -40,8 +39,6 @@ export function SessionProvider({ children }: SessionProviderProps) {
     }
 
     const loadAndVerifyToken = async () => {
-      //const storedToken = localStorage.getItem('accessToken')||"";
-      console.log("SessionContext-loadAndVerifyToken()")
       const storedToken = Cookies.get("token")?.toString() || "";
       const isValid = await verifyToken(storedToken);
       if (!isValid) {
@@ -52,7 +49,6 @@ export function SessionProvider({ children }: SessionProviderProps) {
   }, []);
 
   const login = (userData: User, token: string) => {
-    console.log("SessionContext login()----------");
     setUser(userData);
     setAccessToken(token);
     setIsAuthenticated(true);
@@ -64,13 +60,11 @@ export function SessionProvider({ children }: SessionProviderProps) {
   };
 
   const logout = async () => {
-    console.log("SessionContext logout()----------");
     setIsAuthenticated(false);
     setAccessToken(null);
     setUser(null);
     Cookies.remove("user");
     Cookies.remove("token");
-
     //localStorage.removeItem('user');
     //localStorage.removeItem('accessToken');
     //router.push("/");

@@ -21,21 +21,13 @@ export function UserAuthNav() {
 
 
   React.useEffect(() => {
-    console.log("#### Render UserAuthNev component ###")
-
     const _signToken = async (data: User) => {
       const token = await signToken(data);
-      if(token) login(data, token);
+      if (token) login(data, token);
       else toast.error("ต้องใช้ email@msu.ac.th เท่านั้น");
     }
 
-    console.log("-- Auto SessionContext login()")
-    //console.log("UserAuthNav-session.user=",session?.user);
-
     if (!isAuthenticated && session?.user) {
-      console.log("please SignIn() with SessionContext");
-      //login({id:"0",name:"aa bb",username:"cccc",faculty:"",email:"ddd@msu.ac.th"} as User,"xxxx");
-      console.log("Session ", session.user);
       const userdata: User = {
         id: '0',
         username: session.user.email as string,
@@ -45,10 +37,8 @@ export function UserAuthNav() {
         role: 'member',
       };
       _signToken(userdata);
-      
-    } 
+    }
     else {
-      console.log("Now! current SignIn + Login ----------");
       signOut({ redirect: false });//<-- บังคับให้ signOut ออกจาก NextAuth 
       //const nextauthsession = Cookies.get("next-auth.session-token");
       // if (!nextauthsession) {
@@ -56,12 +46,7 @@ export function UserAuthNav() {
       // }
     }
 
-
-
-
-  }, [session,login,isAuthenticated]);
-
-
+  }, [session, login, isAuthenticated]);
 
   // ปิด dropdown เมื่อคลิกนอกพื้นที่
   React.useEffect(() => {
@@ -78,23 +63,11 @@ export function UserAuthNav() {
 
   const handlerLogout = () => {
     // ต้องเคลียร์ NextAuth(google) และ SessionContext ให้เสร็จก่อน แล้วค่อย redirect
-    // Cookies.remove("user");
-    // Cookies.remove("token");
     logout();
     setOpenLogoutModal(false);
     setIsDropdownOpen(false);
     signOut({ redirect: false }); //<- NextAuth
     router.push("/");
-    //router.push("/signin");
-
-    // const async_logout = async () => {
-    //   signOut({ redirect: false }); //<- NextAuth
-    //   setOpenLogoutModal(false);
-    //   setIsDropdownOpen(false);
-    //   logout();
-    // }
-    // async_logout().then(() => { console.log("redirect to / now!");router.push("/") })
-
   };
 
   const handlerLogin = () => {
@@ -140,21 +113,12 @@ export function UserAuthNav() {
           )}
         </div>
       ) : (
-        // <button
-        //   onClick={handlerLogin} // เปลี่ยนเป็น onClick={handlerLogin} ในโปรเจกต์จริง
-        //   className="px-8 py-2.5 rounded-xl  hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-300 focus:ring-offset-2"
-        // >
-        //   Login
-        // </button>
-
         <button
           onClick={handlerLogin}
           className="flex items-center justify-center h-12 w-12 mx-4 text-2xl rounded-full bg-gray-200 text-gray-800 hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2"
         >
           <LuLogIn />
         </button>
-
-
       )}
 
       <LogoutModal
@@ -166,39 +130,3 @@ export function UserAuthNav() {
     </>
   );
 }
-
-// จำลองการใช้ Session Context (แทนที่ด้วย useSession ของคุณ)
-// interface SessionContextType {
-//   user: { name: string } | null;
-//   isAuthenticated: boolean;
-//   login: () => void; // จำลอง
-//   logout: () => void; // จำลอง
-// }
-
-// const useMockSession = (): SessionContextType => {
-//   const [user, setUser] = React.useState<{ name: string } | null>(null);
-//   const [isAuthenticated, setIsAuthenticated] = React.useState(false);
-
-//   React.useEffect(() => {
-//     const storedUser = localStorage.getItem('mockUser');
-//     if (storedUser) {
-//       setUser(JSON.parse(storedUser));
-//       setIsAuthenticated(true);
-//     }
-//   }, []);
-
-//   const login = () => {
-//     const mockUser = { name: "John Doe" };
-//     setUser(mockUser);
-//     setIsAuthenticated(true);
-//     localStorage.setItem('mockUser', JSON.stringify(mockUser));
-//   };
-
-//   const logout = () => {
-//     setUser(null);
-//     setIsAuthenticated(false);
-//     localStorage.removeItem('mockUser');
-//   };
-
-//   return { user, isAuthenticated, login, logout };
-// };

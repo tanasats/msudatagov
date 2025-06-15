@@ -10,12 +10,8 @@ import { LuBug } from 'react-icons/lu'
 import { EyeIcon, EyeOffIcon } from 'lucide-react'
 import { toast } from 'react-hot-toast'
 import { signIn } from 'next-auth/react'
-//import { User } from '@/types'
-//import { signToken } from '@/lib/jwt'
 
 const SigninPage = () => {
-    console.log("SigninPage()--------------")
-    //const { data: session } = useSession();
     const [showPassword, setShowPassword] = useState(false);
     const { login } = useSessionContext();
     const APP_NAME = process.env.NEXT_PUBLIC_APP_NAME;
@@ -39,26 +35,6 @@ const SigninPage = () => {
             toast.error("ชื่อผู้ใช้งาน หรือรหัสผ่าน ไม่ถูกต้อง")
         }
     }
-
-    // useEffect(() => {
-    //     if (session && session.user) { // google session
-    //         console.log("check next-auth session ", session);
-    //         const userdata: User = {
-    //             id: '0',
-    //             username: session.user.email ?? "",
-    //             name: session.user.name ?? "",
-    //             faculty: "",
-    //             email: session.user.email ?? "",
-    //             role: 'member',
-    //         };
-
-    //         signToken(userdata).then((token) => {
-    //             console.log("google token=",token);
-    //             login(userdata, token);
-    //             //toast.success("สวัสดี " + userdata.name + " (email authen)");
-    //         });
-    //     }
-    // }, [session])
 
     return (
         <div className='w-full bg-[url("/signin_bg.jpg")] bg-cover bg-center'>
